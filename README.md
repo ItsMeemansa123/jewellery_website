@@ -1,2 +1,2 @@
 # jewellery_website
-An jewellry website for small buisness
+An jewellery website for small buisness
