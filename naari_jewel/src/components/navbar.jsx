@@ -5,7 +5,7 @@ function Navbar() {
 
   return (
     <nav className="flex justify-between items-center px-8 py-4 bg-[#fbfff1ea] sticky top-0 z-50">
-      <div className="text-2xl font-semibold tracking-wide text-[#521A14]">
+      <div className="text-2xl font-semibold tracking-wide text-[#73251C]">
         Naari Jewels
       </div>
 
