@@ -1,5 +1,10 @@
+import { useEffect, useRef } from "react";
+
 function MainPage() {
+
+
   return (
+    
     <section
       id="home"
       className="min-h-screen flex flex-col items-center justify-center text-center px-6 bg-linear-to-b from-[#FBFFF1] to-[#85756E]"
