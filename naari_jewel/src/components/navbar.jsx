@@ -14,7 +14,7 @@ function Navbar() {
       <ul className="hidden md:flex gap-8 text-gray-700 text-sm">
         <li><a href="#home" className="hover:text-[#673544]">Home</a></li>
         <li><a href="#shop" className="hover:text-[#673544]">Shop</a></li>
-        <li><a href="#about" className="hover:text-[#673544]">About</a></li>
+        <li><a href="#whatsapp" className="hover:text-[#673544]">Community</a></li>
         <li><a href="#contact" className="hover:text-[#673544]">Contact</a></li>
       </ul>
     <div className="flex items-center gap-4">
