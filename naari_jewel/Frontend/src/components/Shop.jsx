@@ -1,8 +1,15 @@
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { motion } from "framer-motion";
-import products from "../data/Products";
 import MarqueeCard from "./MarqueeCard";
-
 function Shop() {
+   const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:5000/api/products").then((res) => {
+      setProducts(res.data);
+    });
+  }, []);
  
   return (
     <section
@@ -26,7 +33,7 @@ function Shop() {
         <div className="overflow-hidden mb-8">
           <div className="flex gap-8 w-max animate-scroll-left">
             {[...products, ...products].map((product, i) => (
-              <MarqueeCard key={`row1-${product.id}-${i}`} product={product} />
+              <MarqueeCard key={`row1-${product._id}-${i}`} product={product} />
             ))}
           </div>
         </div>
@@ -35,7 +42,7 @@ function Shop() {
         <div className="overflow-hidden">
           <div className="flex gap-8 w-max animate-scroll-right">
             {[...products, ...products].map((product, i) => (
-              <MarqueeCard key={`row2-${product.id}-${i}`} product={product} />
+              <MarqueeCard key={`row2-${product._id}-${i}`} product={product} />
             ))}
         
           </div>
@@ -47,7 +54,7 @@ function Shop() {
             rel="noopener noreferrer"
             className="inline-block bg-[#85756E] border border-[#85756E] text-white px-8 py-3 rounded-full hover:bg-[#14213D] hover:text-white transition font-medium"
           >
-            Shop Now
+            Shop More on WhatsApp                                     
           </a>
         </div>
           

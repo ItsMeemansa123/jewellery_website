@@ -1,8 +1,15 @@
-import products from "../data/Products";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import ProductCard from "../components/ProductCard";
 
 function ShopAll() {
-  const limitedProducts = products.slice(0, 6);
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:5000/api/products").then((res) => {
+      setProducts(res.data.slice(0, 6));
+    });
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#14213D] px-6 py-16">
@@ -14,8 +21,8 @@ function ShopAll() {
       </p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        {limitedProducts.map((product) => (
-          <ProductCard key={product.id} product={product} />
+         {products.map((product) => (
+          <ProductCard key={product._id} product={product} />
         ))}
       </div>
 

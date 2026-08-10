@@ -1,9 +1,18 @@
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { motion } from "framer-motion";
-import Products from "../data/Products";
 
 function Categories() {
-  const categories = [...new Set(Products.map((p) => p.style))].map((styleName) => {
-    const sample = Products.find((p) => p.style === styleName);
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:5000/api/products").then((res) => {
+      setProducts(res.data);
+    });
+  }, []);
+
+  const categories = [...new Set(products.map((p) => p.style))].map((styleName) => {
+    const sample = products.find((p) => p.style === styleName);
     return { name: styleName, image: sample.image };
   });
 
