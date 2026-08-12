@@ -6,7 +6,7 @@ function ShopAll() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/products").then((res) => {
+    axios.get(`${import.meta.env.VITE_API_URL}/api/products`).then((res) => {
       setProducts(res.data.slice(0, 6));
     });
   }, []);
@@ -28,7 +28,7 @@ function ShopAll() {
 
       <div className="text-center mt-14">
         <a
-          href="https://whatsapp.com/channel/YOUR-CHANNEL-LINK-HERE"
+          href="https://chat.whatsapp.com/G6jchGY3gCPJEtOivM9yw9"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-block bg-[#25D366] text-white px-8 py-3 rounded-full hover:bg-[#1ebe5d] transition font-medium"

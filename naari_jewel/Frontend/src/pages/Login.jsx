@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 function Login() {
@@ -8,6 +8,10 @@ function Login() {
   const [error, setError] = useState("");
   const { login } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // where the user was headed before being sent to login; default "/"
+  const from = location.state?.from || "/";
 
   function handleChange(e) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -17,13 +21,14 @@ function Login() {
     e.preventDefault();
     setError("");
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", formData);
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, formData);
       login(res.data.user, res.data.token);
-      navigate("/");
+      navigate(from, { replace: true });
     } catch (err) {
       setError(err.response?.data?.message || "Something went wrong");
     }
   }
+  // ...rest stays the same
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#14213D] px-6">

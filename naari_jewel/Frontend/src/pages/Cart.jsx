@@ -6,9 +6,11 @@ function Cart() {
   const total = cart.reduce((sum, item) => sum + item.price, 0);
 
   function buildWhatsAppMessage() {
-    const lines = cart.map((item) => `- ${item.name} (₹${item.price})`).join("%0A");
-    const message = `Hi! I'd like to order:%0A${lines}%0A%0ATotal: ₹${total}`;
-    return `https://wa.me/YOUR_NUMBER?text=${message}`;
+    const lines = cart
+      .map((item) => `- ${item.name}%0A  Image: ${item.image}`)
+      .join("%0A%0A");
+    const message = `Hi! I'm interested in ordering these pieces:%0A%0A${lines}`;
+    return `https://wa.me/9634584884?text=${message}`;
   }
 
   if (cart.length === 0) {
@@ -25,7 +27,7 @@ function Cart() {
 
       <div className="max-w-2xl mx-auto space-y-4">
         {cart.map((item, i) => (
-          <div key={`${item.id}-${i}`} className="flex items-center justify-between bg-white rounded-xl p-4 shadow-sm">
+          <div key={`${item._id}-${i}`} className="flex items-center justify-between bg-white rounded-xl p-4 shadow-sm">
             <div className="flex items-center gap-4">
               <img src={item.image} alt={item.name} className="w-16 h-16 object-cover rounded-lg" />
               <div>
@@ -34,7 +36,7 @@ function Cart() {
               </div>
             </div>
             <button
-              onClick={() => removeFromCart(item.id)}
+              onClick={() => removeFromCart(item._id)}
               className="text-red-500 text-sm hover:underline"
             >
               Remove
@@ -43,9 +45,12 @@ function Cart() {
         ))}
 
         <div className="flex justify-between font-medium text-lg pt-4 border-t border-gray-300">
-          <span>Total</span>
+          <span>Estimated Total</span>
           <span>₹{total}</span>
         </div>
+        <p className="text-xs text-gray-400 text-center">
+          Final pricing will be confirmed by us on WhatsApp.
+        </p>
 
         <a
           href={buildWhatsAppMessage()}

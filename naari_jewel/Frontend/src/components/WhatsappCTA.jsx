@@ -27,7 +27,7 @@ function WhatsAppCTA() {
 
       
       <a  
-        href="https://whatsapp.com/channel/YOUR-CHANNEL-LINK-HERE"
+        href="https://chat.whatsapp.com/G6jchGY3gCPJEtOivM9yw9"
         target="_blank"
         rel="noopener noreferrer"
         className="inline-flex items-center gap-2 mt-8 bg-[#25D366] text-white px-8 py-3 rounded-full hover:bg-[#1ebe5d] transition font-medium"

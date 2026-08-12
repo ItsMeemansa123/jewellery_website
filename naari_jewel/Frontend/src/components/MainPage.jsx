@@ -30,7 +30,7 @@ function MainPage() {
           Shop Collection
         </a>
         <a
-          href="#about"
+          href="#story"
           className="border border-[#85756E] text-[#00243D] px-6 py-3 rounded-full hover:bg-[#85756E] hover:text-white transition"
         >
           Our Story

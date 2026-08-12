@@ -31,10 +31,10 @@ function Footer() {
           <div>
             <h4 className="uppercase text-sm tracking-widest text-[#C9A66B] mb-4">Get in Touch</h4>
             <div className="flex gap-4 mt-4 text-xl">
-              <a href="https://instagram.com/YOUR_HANDLE" target="_blank" rel="noopener noreferrer" className="hover:text-[#C9A66B]">
+              <a href="https://instagram.com/naari_jewel" target="_blank" rel="noopener noreferrer" className="hover:text-[#C9A66B]">
                 Instagram
               </a>
-              <a href="https://wa.me/YOUR_NUMBER" target="_blank" rel="noopener noreferrer" className="hover:text-[#C9A66B]">
+              <a href="https://chat.whatsapp.com/G6jchGY3gCPJEtOivM9yw9" target="_blank" rel="noopener noreferrer" className="hover:text-[#C9A66B]">
                 WhatsApp
               </a>
             </div>

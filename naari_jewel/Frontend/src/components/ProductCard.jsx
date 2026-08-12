@@ -9,13 +9,13 @@ function ProductCard({ product }) {
   const navigate = useNavigate();
 
   function handleBuyNow() {
-    if (!user) {
-      navigate("/login");
-      return;
-    }
-    addToCart(product);
-    navigate("/cart");
+  addToCart(product);
+  if (!user) {
+    navigate("/login", { state: { from: "/cart" } });
+    return;
   }
+  navigate("/cart");
+}
 
   return (
     <motion.div

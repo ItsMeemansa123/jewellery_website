@@ -22,7 +22,7 @@ function AdminDashboard() {
   }, [user]);
 
   async function fetchProducts() {
-    const res = await axios.get("http://localhost:5000/api/products");
+    const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/products`);
     setProducts(res.data);
   }
 
@@ -37,7 +37,7 @@ function AdminDashboard() {
     try {
       const token = localStorage.getItem("token");
       await axios.post(
-        "http://localhost:5000/api/products",
+        `${import.meta.env.VITE_API_URL}/api/products`,
         { ...formData, price: Number(formData.price), stock: Number(formData.stock) },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -52,7 +52,7 @@ function AdminDashboard() {
 
   async function handleDelete(id) {
     const token = localStorage.getItem("token");
-    await axios.delete(`http://localhost:5000/api/products/${id}`, {
+    await axios.delete(`${import.meta.env.VITE_API_URL}/api/products/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     fetchProducts();
