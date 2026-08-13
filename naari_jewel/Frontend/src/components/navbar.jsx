@@ -76,12 +76,12 @@ function Navbar() {
           </Link>
         )}
 
-        <button
+        {/* <button
           className="md:hidden text-2xl"
           onClick={() => setMenuOpen(!menuOpen)}
         >
           ☰
-        </button>
+        </button> */}
       </div>
 
       {menuOpen && !isAuthPage && (
