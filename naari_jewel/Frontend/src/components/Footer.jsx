@@ -34,7 +34,7 @@ function Footer() {
               <a href="https://instagram.com/naari_jewel" target="_blank" rel="noopener noreferrer" className="hover:text-[#C9A66B]">
                 Instagram
               </a>
-              <a href="https://chat.whatsapp.com/G6jchGY3gCPJEtOivM9yw9" target="_blank" rel="noopener noreferrer" className="hover:text-[#C9A66B]">
+              <a href="https://chat.whatsapp.com/BDRJBdeyyVWGVso9MfUp1X" target="_blank" rel="noopener noreferrer" className="hover:text-[#C9A66B]">
                 WhatsApp
               </a>
             </div>

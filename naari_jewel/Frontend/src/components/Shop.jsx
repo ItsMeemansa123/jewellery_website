@@ -49,7 +49,7 @@ function Shop() {
         </div>
          <div className="text-center mt-12">
           <a
-            href="https://chat.whatsapp.com/G6jchGY3gCPJEtOivM9yw9"
+            href="https://chat.whatsapp.com/BDRJBdeyyVWGVso9MfUp1X"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block bg-[#85756E] border border-[#85756E] text-white px-8 py-3 rounded-full hover:bg-[#14213D] hover:text-white transition font-medium"
