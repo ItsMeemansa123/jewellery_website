@@ -30,15 +30,15 @@
 
 
 ## Tech Stack
-
+````
 | Layer | Technologies |
 |---|---|
 | **Frontend** | React 19, Vite, Tailwind CSS 4, Framer Motion, Axios, React Router 7, FontAwesome |
 | **Backend** | Node.js, Express 5, Mongoose, JWT, BcryptJS, Razorpay SDK, `@google/genai` (Google Gemini) |
 | **Database** | MongoDB Atlas (Cloud Database) |
 | **Payments** | Razorpay (UPI, Cards, NetBanking, Wallets) + WhatsApp API |
-
-
+````
+````
 ## Project Structure
 
 Naari_jewel/
@@ -95,7 +95,7 @@ Naari_jewel/
     │       ├── api.js                # Dynamic API Base URL resolver
     │       └── razorpay.js           # Razorpay checkout modal loader
     └── vite.config.js
-
+````
 
 ## Quickstart Guide
 
