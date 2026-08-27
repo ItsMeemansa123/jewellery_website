@@ -20,13 +20,10 @@ Core Guidelines:
 6. Keep your tone encouraging, elegant, and concise.
 `;
 
-/**
- * Intelligent Rule & Pattern Extractor for queries
- */
+
 function extractUserIntent(message) {
   const lower = message.toLowerCase();
 
-  // Price extraction
   let maxPrice = null;
   let minPrice = null;
   const underMatch = lower.match(/(?:under|below|less than|within|max|budget of)\s*(?:rs\.?|inr|₹)?\s*(\d+)/i);
@@ -38,27 +35,24 @@ function extractUserIntent(message) {
     maxPrice = Number(betweenMatch[2]);
   }
 
-  // Category
   let category = "";
   if (lower.includes("necklace") || lower.includes("choker") || lower.includes("chain") || lower.includes("pendant")) category = "Necklace";
   else if (lower.includes("earring") || lower.includes("jhumka") || lower.includes("stud") || lower.includes("drop")) category = "Earrings";
   else if (lower.includes("ring") || lower.includes("band")) category = "Ring";
   else if (lower.includes("bangle") || lower.includes("bracelet") || lower.includes("kada")) category = "Bangles";
 
-  // Style
   let style = "";
   if (lower.includes("boho") || lower.includes("bohemian")) style = "Boho";
   else if (lower.includes("chic") || lower.includes("modern") || lower.includes("minimal")) style = "Chic";
   else if (lower.includes("western")) style = "Western";
   else if (lower.includes("oxidised") || lower.includes("silver")) style = "Oxidised";
 
-  // Occasion
   let occasion = "";
   if (lower.includes("birthday") || lower.includes("gift") || lower.includes("sister") || lower.includes("friend")) occasion = "Gifting";
   else if (lower.includes("daily") || lower.includes("everyday") || lower.includes("office")) occasion = "Daily Wear";
   else if (lower.includes("wedding") || lower.includes("party") || lower.includes("festival")) occasion = "Party";
 
-  // Intent Types
+
   const isComparison = lower.includes("compare") || lower.includes("difference") || lower.includes("versus") || lower.includes("vs");
   const isPolicy = lower.includes("return") || lower.includes("refund") || lower.includes("exchange") || lower.includes("shipping") || lower.includes("delivery") || lower.includes("care") || lower.includes("clean") || lower.includes("authentic") || lower.includes("track");
 
@@ -73,13 +67,9 @@ function extractUserIntent(message) {
   };
 }
 
-/**
- * Executes fallback intelligent reasoning when Gemini key isn't provided or during quick response mode
- */
 async function executeFallbackAgent(message, history = []) {
   const intent = extractUserIntent(message);
 
-  // 1. Policy & FAQ Check (RAG)
   if (intent.isPolicy) {
     const policyResult = getPolicyAndFAQ({ topic: message });
     if (policyResult.found && policyResult.policies.length > 0) {
@@ -93,7 +83,6 @@ async function executeFallbackAgent(message, history = []) {
     }
   }
 
-  // 2. Comparison Request
   if (intent.isComparison) {
     const comparisonResult = await compareProducts({});
     if (comparisonResult.success) {
@@ -106,7 +95,6 @@ async function executeFallbackAgent(message, history = []) {
     }
   }
 
-  // 3. Product Search & Recommendation
   const searchResult = await searchProducts({
     query: message,
     category: intent.category,
@@ -118,7 +106,6 @@ async function executeFallbackAgent(message, history = []) {
   });
 
   if (searchResult.products.length === 0) {
-    // Broad fallback search
     const allProducts = await searchProducts({ limit: 3 });
     return {
       reply: `I couldn't find an exact match for "${message}", but here are our top-rated signature handcrafted pieces you might love:`,
@@ -128,7 +115,6 @@ async function executeFallbackAgent(message, history = []) {
     };
   }
 
-  // Craft dynamic personalized response
   const topProduct = searchResult.products[0];
   let replyText = `I found **${searchResult.products.length} stunning piece${searchResult.products.length > 1 ? "s" : ""}** tailored to your preferences!`;
 
@@ -149,21 +135,18 @@ async function executeFallbackAgent(message, history = []) {
   };
 }
 
-/**
- * Main Agent Controller with Gemini Tool Calling & Fallback
- */
+
 async function processUserMessage(message, history = []) {
   const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
 
   if (!apiKey) {
-    // Seamless fallback to intelligent local neural agent
+    
     return await executeFallbackAgent(message, history);
   }
 
   try {
     const ai = new GoogleGenAI({ apiKey });
 
-    // Define tool declarations for Gemini
     const toolDeclarations = [
       {
         name: "searchProducts",

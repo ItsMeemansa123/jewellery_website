@@ -17,11 +17,11 @@ if (process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET) {
 }
 
 /**
- * Creates an order with Razorpay
+ * 
  * @param {Object} params
- * @param {number} params.amount Amount in INR (will be converted to paise)
- * @param {string} params.receipt Unique receipt ID / internal order ID
- * @param {Object} [params.notes] Additional metadata
+ * @param {number} params.amount 
+ * @param {string} params.receipt 
+ * @param {Object} [params.notes] 
  */
 async function createRazorpayOrder({ amount, receipt, notes = {} }) {
   const amountInPaise = Math.round(amount * 100);
@@ -36,7 +36,7 @@ async function createRazorpayOrder({ amount, receipt, notes = {} }) {
     return await razorpayInstance.orders.create(options);
   }
 
-  // Fallback test sandbox order if credentials not yet configured
+
   return {
     id: `order_mock_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
     entity: "order",
@@ -54,7 +54,6 @@ async function createRazorpayOrder({ amount, receipt, notes = {} }) {
 }
 
 /**
- * Verifies Razorpay payment signature
  * @param {Object} params
  * @param {string} params.razorpayOrderId
  * @param {string} params.razorpayPaymentId
@@ -69,7 +68,6 @@ function verifyRazorpaySignature({
     return false;
   }
 
-  // If using sandbox mock orders
   if (razorpayOrderId.startsWith("order_mock_") && razorpaySignature === "mock_signature_valid") {
     return true;
   }
