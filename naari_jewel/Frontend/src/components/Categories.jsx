@@ -1,20 +1,37 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../services/api";
 
 function Categories() {
   const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`${import.meta.env.VITE_API_URL}/api/products`).then((res) => {
+    axios.get(`${API_BASE_URL}/api/products`).then((res) => {
       setProducts(res.data);
     });
   }, []);
 
-  const categories = [...new Set(products.map((p) => p.style))].map((styleName) => {
-    const sample = products.find((p) => p.style === styleName);
-    return { name: styleName, image: sample.image };
+  // Extract unique categories & styles dynamically with sample images
+  const categoryMap = new Map();
+  products.forEach((p) => {
+    const key = p.category || p.style;
+    if (key && !categoryMap.has(key)) {
+      categoryMap.set(key, {
+        name: key,
+        image: p.image,
+        count: products.filter((item) => item.category === key || item.style === key).length,
+      });
+    }
   });
+
+  const categories = Array.from(categoryMap.values()).slice(0, 6);
+
+  function handleCategoryClick(catName) {
+    navigate(`/shop`);
+  }
 
   return (
     <section className="py-20 px-6 bg-linear-to-b from-[#85756E] to-[#14213D]">
@@ -28,26 +45,34 @@ function Categories() {
           Explore Our Variety
         </h2>
         <p className="text-center text-[#FAF6EF]/60 mb-12">
-          From everyday elegance to statement pieces.
+          From everyday elegance to statement heirloom pieces.
         </p>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-7xl mx-auto">
-          {categories.map((cat) => (
-            <div
+        {/* Dynamically balanced responsive grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
+          {categories.map((cat, idx) => (
+            <motion.div
               key={cat.name}
-              className="relative rounded-2xl overflow-hidden group cursor-pointer"
+              whileHover={{ scale: 1.03 }}
+              transition={{ duration: 0.3 }}
+              onClick={() => handleCategoryClick(cat.name)}
+              className="relative rounded-2xl overflow-hidden group cursor-pointer shadow-lg aspect-4/5 md:aspect-square bg-gray-900"
             >
               <img
                 src={cat.image}
                 alt={cat.name}
-                className="w-full h-80 md:h-96 object-cover group-hover:scale-110 transition duration-500"
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-90 group-hover:opacity-100"
               />
-              <div className="absolute inset-0 bg-black/40 flex items-end justify-center pb-6">
-                <p className="text-[#FAF6EF] font-serif text-2xl tracking-wide">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6">
+                <p className="text-[#FAF6EF] font-serif text-2xl tracking-wide font-medium">
                   {cat.name}
                 </p>
+                <p className="text-white/70 text-xs mt-1 flex items-center gap-1 group-hover:text-[#C9A66B] transition-colors">
+                  <span>Explore Collection</span>
+                  <span>→</span>
+                </p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </motion.div>
@@ -55,4 +80,4 @@ function Categories() {
   );
 }
 
-export default Categories;
+export default Categories;

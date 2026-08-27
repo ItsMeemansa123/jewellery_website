@@ -8,6 +8,12 @@ const productSchema = new mongoose.Schema(
     price: { type: Number, required: true },
     image: { type: String, required: true },
     stock: { type: Number, default: 1 },
+    description: { type: String, default: "" },
+    material: { type: String, default: "Sterling Silver / Semi-precious" },
+    occasion: { type: [String], default: ["Casual", "Gifting", "Party", "Daily Wear"] },
+    rating: { type: Number, default: 4.8 },
+    reviewsCount: { type: Number, default: 14 },
+    tags: { type: [String], default: [] },
   },
   { timestamps: true }
 );

@@ -1,0 +1,11 @@
+{
+  "name": "naari_jewels_monorepo",
+  "version": "1.0.0",
+  "description": "Naari Jewels AI-Native Shopping Platform",
+  "scripts": {
+    "dev:backend": "npm --prefix Backend run dev",
+    "dev:frontend": "npm --prefix Frontend run dev",
+    "start": "npm --prefix Backend start",
+    "build": "npm --prefix Frontend run build"
+  }
+}

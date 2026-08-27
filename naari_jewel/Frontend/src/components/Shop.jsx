@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 import MarqueeCard from "./MarqueeCard";
+import { API_BASE_URL } from "../services/api";
+
 function Shop() {
    const [products, setProducts] = useState([]);
 
   useEffect(() => {
-   axios.get(`${import.meta.env.VITE_API_URL}/api/products`).then((res) => {
+   axios.get(`${API_BASE_URL}/api/products`).then((res) => {
       setProducts(res.data);
     });
   }, []);

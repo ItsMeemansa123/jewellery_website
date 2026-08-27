@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import ProductCard from "../components/ProductCard";
+import { API_BASE_URL } from "../services/api";
 
 function ShopAll() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    axios.get(`${import.meta.env.VITE_API_URL}/api/products`).then((res) => {
-      setProducts(res.data.slice(0, 6));
+    axios.get(`${API_BASE_URL}/api/products`).then((res) => {
+      setProducts(res.data.slice(0, 12));
     });
   }, []);
 

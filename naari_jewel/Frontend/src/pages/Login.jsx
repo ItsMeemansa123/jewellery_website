@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { API_BASE_URL } from "../services/api";
 
 function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -21,7 +22,7 @@ function Login() {
     e.preventDefault();
     setError("");
     try {
-      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, formData);
+      const res = await axios.post(`${API_BASE_URL}/api/auth/login`, formData);
       login(res.data.user, res.data.token);
       navigate(from, { replace: true });
     } catch (err) {
@@ -56,6 +57,16 @@ function Login() {
           className="w-full border border-gray-300 rounded-lg px-4 py-2 mb-6 focus:outline-none focus:border-[#C9A66B]"
         />
 
+        <div className="flex justify-end mb-4">
+          <Link
+            to="/forgot-password"
+            state={{ from }}
+            className="text-xs text-[#162e61] hover:text-[#C9A66B] hover:underline"
+          >
+            Forgot Password?
+          </Link>
+        </div>
+
         <button
           type="submit"
           className="w-full bg-[#162e61] text-[#fbfff1ea] py-2 rounded-full font-medium hover:bg-[#172a53] hover:text-[#fbfff1ea] transition"
@@ -65,7 +76,11 @@ function Login() {
 
         <p className="text-sm text-center mt-4 text-gray-600">
           Don't have an account?{" "}
-          <Link to="/signup" className="text-[#162e61] hover:text-[#C9A66B] hover:underline transition">
+          <Link
+            to="/signup"
+            state={{ from }}
+            className="text-[#162e61] hover:text-[#C9A66B] hover:underline transition font-semibold"
+          >
             Sign up
           </Link>
         </p>

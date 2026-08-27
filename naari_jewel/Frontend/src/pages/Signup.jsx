@@ -1,11 +1,17 @@
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { API_BASE_URL } from "../services/api";
 
 function Signup() {
   const [formData, setFormData] = useState({ name: "", email: "", password: "" });
   const [error, setError] = useState("");
+  const { login } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from || "/";
 
   function handleChange(e) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -15,8 +21,13 @@ function Signup() {
     e.preventDefault();
     setError("");
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/signup`, formData);
-      navigate("/login");
+      const res = await axios.post(`${API_BASE_URL}/api/auth/signup`, formData);
+      if (res.data.token && res.data.user) {
+        login(res.data.user, res.data.token);
+        navigate(from, { replace: true });
+      } else {
+        navigate("/login", { state: { from } });
+      }
     } catch (err) {
       setError(err.response?.data?.message || "Something went wrong");
     }
@@ -71,7 +82,11 @@ function Signup() {
 
         <p className="text-sm text-center mt-4 text-gray-600">
           Already have an account?{" "}
-          <Link to="/login" className="text-[#162e61] hover:text-[#C9A66B] hover:underline transition">
+          <Link
+            to="/login"
+            state={{ from }}
+            className="text-[#162e61] hover:text-[#C9A66B] hover:underline transition font-semibold"
+          >
             Login
           </Link>
         </p>

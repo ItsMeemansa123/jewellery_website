@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../services/api";
 
 function AdminDashboard() {
   const { user } = useAuth();
@@ -22,7 +23,7 @@ function AdminDashboard() {
   }, [user]);
 
   async function fetchProducts() {
-    const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/products`);
+    const res = await axios.get(`${API_BASE_URL}/api/products`);
     setProducts(res.data);
   }
 
@@ -37,7 +38,7 @@ function AdminDashboard() {
     try {
       const token = localStorage.getItem("token");
       await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/products`,
+        `${API_BASE_URL}/api/products`,
         { ...formData, price: Number(formData.price), stock: Number(formData.stock) },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -52,7 +53,7 @@ function AdminDashboard() {
 
   async function handleDelete(id) {
     const token = localStorage.getItem("token");
-    await axios.delete(`${import.meta.env.VITE_API_URL}/api/products/${id}`, {
+    await axios.delete(`${API_BASE_URL}/api/products/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     fetchProducts();
